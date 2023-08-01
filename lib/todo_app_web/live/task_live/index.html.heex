@@ -7,29 +7,63 @@
   </:actions>
 </.header>
 
-<.table
-  id="tasks"
-  rows={@streams.tasks}
-  row_click={fn {_id, task} -> JS.navigate(~p"/todo/#{task}") end}
->
-  <:col :let={{_id, task}} label="Title"><%= task.title %></:col>
-  <:col :let={{_id, task}} label="Date"><%= task.date %></:col>
-  <:col :let={{_id, task}} label="Completed"><%= task.completed %></:col>
-  <:action :let={{_id, task}}>
-    <div class="sr-only">
-      <.link navigate={~p"/todo/#{task}"}>Show</.link>
-    </div>
-    <.link patch={~p"/todo/#{task}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, task}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: task.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+<div class="border rounded-lg px-4 py-2 my-2">
+  <h2 class="font-semibold">In progress or prior to start</h2>
+  <.table
+    id="incomplete_tasks"
+    rows={@streams.incomplete_tasks}
+    row_click={fn {_id, task} -> JS.navigate(~p"/todo/#{task}") end}
+  >
+    <:col :let={{_id, task}} label="Completed">
+      <input phx-click="completed" phx-value-task_id={task.id} type="checkbox" label="completed" />
+    </:col>
+    <:col :let={{_id, task}} label="Title"><%= task.title %></:col>
+    <:col :let={{_id, task}} label="Date"><%= task.date %></:col>
+    <:action :let={{_id, task}}>
+      <div class="sr-only">
+        <.link navigate={~p"/todo/#{task}"}>Show</.link>
+      </div>
+      <.link patch={~p"/todo/#{task}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{id, task}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: task.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</div>
+
+<div class="border rounded-lg px-4 py-2 my-2">
+  <h2 class="font-semibold">Completed</h2>
+  <.table
+    id="completed_tasks"
+    rows={@streams.completed_tasks}
+    row_click={fn {_id, task} -> JS.navigate(~p"/todo/#{task}") end}
+  >
+    <:col :let={{_id, task}} label="Completed">
+      <input phx-click="completed" phx-value-task_id={task.id} type="checkbox" label="completed" checked />
+    </:col>
+    <:col :let={{_id, task}} label="Title"><%= task.title %></:col>
+    <:col :let={{_id, task}} label="Date"><%= task.date %></:col>
+    <:action :let={{_id, task}}>
+      <div class="sr-only">
+        <.link navigate={~p"/todo/#{task}"}>Show</.link>
+      </div>
+      <.link patch={~p"/todo/#{task}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{id, task}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: task.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</div>
 
 <.modal :if={@live_action in [:new, :edit]} id="task-modal" show on_cancel={JS.patch(~p"/todo")}>
   <.live_component

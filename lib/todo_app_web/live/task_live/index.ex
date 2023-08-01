@@ -6,7 +6,16 @@ defmodule TodoAppWeb.TaskLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :tasks, Tasks.list_tasks())}
+    tasks =
+      socket.assigns.current_account.id
+      |> Tasks.list_tasks_by_account_id()
+      |> Enum.group_by(fn task -> task.completed end)
+
+    {:ok,
+      socket
+      |> stream(:completed_tasks, Map.get(tasks, true, []))
+      |> stream(:incomplete_tasks, Map.get(tasks, false, []))
+    }
   end
 
   @impl true
@@ -34,7 +43,13 @@ defmodule TodoAppWeb.TaskLive.Index do
 
   @impl true
   def handle_info({TodoAppWeb.TaskLive.FormComponent, {:saved, task}}, socket) do
-    {:noreply, stream_insert(socket, :tasks, task)}
+    {:noreply, stream_insert(socket, :incomplete_tasks, task)}
+  end
+
+  @impl true
+  def handle_event("completed", %{"task_id" => task_id}, socket) do
+    task = Tasks.get_task!(task_id)
+    switch_completed(socket, task, task.completed)
   end
 
   @impl true
@@ -42,6 +57,36 @@ defmodule TodoAppWeb.TaskLive.Index do
     task = Tasks.get_task!(id)
     {:ok, _} = Tasks.delete_task(task)
 
-    {:noreply, stream_delete(socket, :tasks, task)}
+    stream_name = if task.completed, do: :completed_tasks, else: :incomplete_tasks
+
+    {:noreply, stream_delete(socket, stream_name, task)}
+  end
+
+  defp switch_completed(socket, task, true) do
+    case Tasks.update_task(task, %{"completed" => false}) do
+      {:ok, task} ->
+        {:noreply,
+          socket
+          |> stream_delete(:completed_tasks, task)
+          |> stream_insert(:incomplete_tasks, task)
+          |> put_flash(:info, "Updated task successfully")
+        }
+
+      _ -> {:noreply, socket}
+    end
+  end
+
+  defp switch_completed(socket, task, false) do
+    case Tasks.update_task(task, %{"completed" => true}) do
+      {:ok, task} ->
+        {:noreply,
+          socket
+          |> stream_delete(:incomplete_tasks, task)
+          |> stream_insert(:completed_tasks, task)
+          |> put_flash(:info, "Updated task successfully")
+        }
+
+      _ -> {:noreply, socket}
+    end
   end
 end
