@@ -1,8 +1,8 @@
 <.header>
-  Listing Tasks
+  Your Todo
   <:actions>
-    <.link patch={~p"/tasks/new"}>
-      <.button>New Task</.button>
+    <.link patch={~p"/todo/new"}>
+      <.button>Add Task</.button>
     </.link>
   </:actions>
 </.header>
@@ -10,16 +10,16 @@
 <.table
   id="tasks"
   rows={@streams.tasks}
-  row_click={fn {_id, task} -> JS.navigate(~p"/tasks/#{task}") end}
+  row_click={fn {_id, task} -> JS.navigate(~p"/todo/#{task}") end}
 >
   <:col :let={{_id, task}} label="Title"><%= task.title %></:col>
   <:col :let={{_id, task}} label="Date"><%= task.date %></:col>
   <:col :let={{_id, task}} label="Completed"><%= task.completed %></:col>
   <:action :let={{_id, task}}>
     <div class="sr-only">
-      <.link navigate={~p"/tasks/#{task}"}>Show</.link>
+      <.link navigate={~p"/todo/#{task}"}>Show</.link>
     </div>
-    <.link patch={~p"/tasks/#{task}/edit"}>Edit</.link>
+    <.link patch={~p"/todo/#{task}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, task}}>
     <.link
@@ -31,13 +31,14 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="task-modal" show on_cancel={JS.patch(~p"/tasks")}>
+<.modal :if={@live_action in [:new, :edit]} id="task-modal" show on_cancel={JS.patch(~p"/todo")}>
   <.live_component
     module={TodoAppWeb.TaskLive.FormComponent}
     id={@task.id || :new}
     title={@page_title}
     action={@live_action}
     task={@task}
-    patch={~p"/tasks"}
+    patch={~p"/todo"}
+    current_account={@current_account}
   />
 </.modal>

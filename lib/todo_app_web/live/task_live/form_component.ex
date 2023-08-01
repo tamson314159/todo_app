@@ -21,7 +21,6 @@ defmodule TodoAppWeb.TaskLive.FormComponent do
       >
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:date]} type="date" label="Date" />
-        <.input field={@form[:completed]} type="checkbox" label="Completed" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Task</.button>
         </:actions>
@@ -70,6 +69,8 @@ defmodule TodoAppWeb.TaskLive.FormComponent do
   end
 
   defp save_task(socket, :new, task_params) do
+    task_params = Map.merge(task_params, %{"account_id" => socket.assigns.current_account.id}) |> IO.inspect()
+
     case Tasks.create_task(task_params) do
       {:ok, task} ->
         notify_parent({:saved, task})
