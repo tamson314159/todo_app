@@ -68,6 +68,13 @@ defmodule TodoAppWeb.Router do
       on_mount: [{TodoAppWeb.AccountAuth, :ensure_authenticated}] do
       live "/accounts/settings", AccountSettingsLive, :edit
       live "/accounts/settings/confirm_email/:token", AccountSettingsLive, :confirm_email
+
+      live "/todo", TaskLive.Index, :index
+      live "/todo/new", TaskLive.Index, :new
+      live "/todo/:id/edit", TaskLive.Index, :edit
+
+      live "/todo/:id", TaskLive.Show, :show
+      live "/todo/:id/show/edit", TaskLive.Show, :edit
     end
   end
 
@@ -80,13 +87,6 @@ defmodule TodoAppWeb.Router do
       on_mount: [{TodoAppWeb.AccountAuth, :mount_current_account}] do
       live "/accounts/confirm/:token", AccountConfirmationLive, :edit
       live "/accounts/confirm", AccountConfirmationInstructionsLive, :new
-
-      live "/tasks", TaskLive.Index, :index
-      live "/tasks/new", TaskLive.Index, :new
-      live "/tasks/:id/edit", TaskLive.Index, :edit
-
-      live "/tasks/:id", TaskLive.Show, :show
-      live "/tasks/:id/show/edit", TaskLive.Show, :edit
     end
   end
 end

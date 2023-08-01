@@ -17,19 +17,19 @@ defmodule TodoAppWeb.TaskLiveTest do
     setup [:create_task]
 
     test "lists all tasks", %{conn: conn, task: task} do
-      {:ok, _index_live, html} = live(conn, ~p"/tasks")
+      {:ok, _index_live, html} = live(conn, ~p"/todo")
 
       assert html =~ "Listing Tasks"
       assert html =~ task.title
     end
 
     test "saves new task", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/tasks")
+      {:ok, index_live, _html} = live(conn, ~p"/todo")
 
       assert index_live |> element("a", "New Task") |> render_click() =~
                "New Task"
 
-      assert_patch(index_live, ~p"/tasks/new")
+      assert_patch(index_live, ~p"/todo/new")
 
       assert index_live
              |> form("#task-form", task: @invalid_attrs)
@@ -39,7 +39,7 @@ defmodule TodoAppWeb.TaskLiveTest do
              |> form("#task-form", task: @create_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/tasks")
+      assert_patch(index_live, ~p"/todo")
 
       html = render(index_live)
       assert html =~ "Task created successfully"
@@ -47,12 +47,12 @@ defmodule TodoAppWeb.TaskLiveTest do
     end
 
     test "updates task in listing", %{conn: conn, task: task} do
-      {:ok, index_live, _html} = live(conn, ~p"/tasks")
+      {:ok, index_live, _html} = live(conn, ~p"/todo")
 
       assert index_live |> element("#tasks-#{task.id} a", "Edit") |> render_click() =~
                "Edit Task"
 
-      assert_patch(index_live, ~p"/tasks/#{task}/edit")
+      assert_patch(index_live, ~p"/todo/#{task}/edit")
 
       assert index_live
              |> form("#task-form", task: @invalid_attrs)
@@ -62,7 +62,7 @@ defmodule TodoAppWeb.TaskLiveTest do
              |> form("#task-form", task: @update_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/tasks")
+      assert_patch(index_live, ~p"/todo")
 
       html = render(index_live)
       assert html =~ "Task updated successfully"
@@ -70,7 +70,7 @@ defmodule TodoAppWeb.TaskLiveTest do
     end
 
     test "deletes task in listing", %{conn: conn, task: task} do
-      {:ok, index_live, _html} = live(conn, ~p"/tasks")
+      {:ok, index_live, _html} = live(conn, ~p"/todo")
 
       assert index_live |> element("#tasks-#{task.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#tasks-#{task.id}")
@@ -81,19 +81,19 @@ defmodule TodoAppWeb.TaskLiveTest do
     setup [:create_task]
 
     test "displays task", %{conn: conn, task: task} do
-      {:ok, _show_live, html} = live(conn, ~p"/tasks/#{task}")
+      {:ok, _show_live, html} = live(conn, ~p"/todo/#{task}")
 
       assert html =~ "Show Task"
       assert html =~ task.title
     end
 
     test "updates task within modal", %{conn: conn, task: task} do
-      {:ok, show_live, _html} = live(conn, ~p"/tasks/#{task}")
+      {:ok, show_live, _html} = live(conn, ~p"/todo/#{task}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Task"
 
-      assert_patch(show_live, ~p"/tasks/#{task}/show/edit")
+      assert_patch(show_live, ~p"/todo/#{task}/show/edit")
 
       assert show_live
              |> form("#task-form", task: @invalid_attrs)
@@ -103,7 +103,7 @@ defmodule TodoAppWeb.TaskLiveTest do
              |> form("#task-form", task: @update_attrs)
              |> render_submit()
 
-      assert_patch(show_live, ~p"/tasks/#{task}")
+      assert_patch(show_live, ~p"/todo/#{task}")
 
       html = render(show_live)
       assert html =~ "Task updated successfully"

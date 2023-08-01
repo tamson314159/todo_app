@@ -22,7 +22,7 @@ defmodule TodoAppWeb.TaskLive.Index do
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Task")
+    |> assign(:page_title, "Add Task")
     |> assign(:task, %Task{})
   end
 
