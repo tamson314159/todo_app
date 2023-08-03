@@ -20,3 +20,5 @@ config :logger, level: :info
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
+
+plug Corsica, origins: "https://tamson314159-todo-app.gigalixirapp.com"
