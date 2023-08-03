@@ -20,7 +20,7 @@ config :todo_app,
 #   pubsub_server: TodoApp.PubSub,
 #   live_view: [signing_salt: "d1ghlONl"]
 config :todo_app, TodoAppWeb.Endpoint,
-  url: [host: "tamson314159-todo-app.vercel.app", port: 443, scheme: "https"],
+  url: [host: "localhost"],
   render_errors: [
     formats: [html: TodoAppWeb.ErrorHTML, json: TodoAppWeb.ErrorJSON],
     layout: false
