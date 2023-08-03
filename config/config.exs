@@ -20,7 +20,7 @@ config :todo_app,
 #   pubsub_server: TodoApp.PubSub,
 #   live_view: [signing_salt: "d1ghlONl"]
 config :todo_app, TodoAppWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "tamson314159-todo-app.gigalixir.com", port: 443, scheme: "https"],
   render_errors: [
     formats: [html: TodoAppWeb.ErrorHTML, json: TodoAppWeb.ErrorJSON],
     layout: false
