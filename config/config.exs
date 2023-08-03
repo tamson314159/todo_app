@@ -11,8 +11,16 @@ config :todo_app,
   ecto_repos: [TodoApp.Repo]
 
 # Configures the endpoint
+# config :todo_app, TodoAppWeb.Endpoint,
+#   url: [host: "localhost"],
+#   render_errors: [
+#     formats: [html: TodoAppWeb.ErrorHTML, json: TodoAppWeb.ErrorJSON],
+#     layout: false
+#   ],
+#   pubsub_server: TodoApp.PubSub,
+#   live_view: [signing_salt: "d1ghlONl"]
 config :todo_app, TodoAppWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "tamson314159-todo-app.vercel.app", port: 443, scheme: "https"],
   render_errors: [
     formats: [html: TodoAppWeb.ErrorHTML, json: TodoAppWeb.ErrorJSON],
     layout: false
