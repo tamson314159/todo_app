@@ -11,7 +11,9 @@ defmodule TodoAppWeb.Endpoint do
     same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]],
+    check_origin: [“https://tamson314159-todo-app.gigalixirapp.com”]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
