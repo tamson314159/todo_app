@@ -7,6 +7,7 @@ import Config
 # before starting your production server.
 config :todo_app, TodoAppWeb.Endpoint,
   url: [host: "tamson314159-todo-app.gigalixir.com", port: 443, scheme: "https"],
+  check_origin: ["//tamson314159-todo-app.gigalixirapp.com", "//*.tamson314159-todo-app.gigalixir.com"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Configures Swoosh API Client
