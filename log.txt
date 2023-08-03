@@ -1,0 +1,23 @@
+2023-08-03T05:30:20.469475+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | 05:30:20.468 [error] Could not check origin for Phoenix.Socket transport.
+2023-08-03T05:30:20.469512+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.469513+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | Origin of the request: https://tamson314159-todo-app.gigalixirapp.com
+2023-08-03T05:30:20.469515+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.469568+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | This happens when you are attempting a socket connection to
+2023-08-03T05:30:20.469871+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | to "localhost" but you may be trying to access it from
+2023-08-03T05:30:20.469612+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | a different host than the one configured in your config/
+2023-08-03T05:30:20.469795+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | files. For example, in development the host is configured
+2023-08-03T05:30:20.469900+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  | "127.0.0.1". To fix this issue, you may either:
+2023-08-03T05:30:20.469942+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.469980+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |   1. update [url: [host: ...]] to your actual host in the
+2023-08-03T05:30:20.470104+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.470062+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |      config file for your current environment (recommended)
+2023-08-03T05:30:20.470213+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |      endpoint or when configuring the transport in your
+2023-08-03T05:30:20.470145+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |   2. pass the :check_origin option when configuring your
+2023-08-03T05:30:20.470268+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |      UserSocket module, explicitly outlining which origins
+2023-08-03T05:30:20.470318+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.470294+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |      are allowed:
+2023-08-03T05:30:20.470368+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+           "//another.com:888", "//other.com"]
+2023-08-03T05:30:20.470344+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |         check_origin: ["https://example.com",
+2023-08-03T05:30:20.470392+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
+2023-08-03T05:30:20.470424+00:00 tamson314159-todo-app[b'tamson314159-todo-app-6b47d498f9-zldrs']: web.1  |
