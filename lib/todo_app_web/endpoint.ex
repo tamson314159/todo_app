@@ -44,8 +44,10 @@ defmodule TodoAppWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
+  plug Corsica, origins: "https://tamson314159-todo-app.gigalixirapp.com"
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
   plug TodoAppWeb.Router
+
 end
